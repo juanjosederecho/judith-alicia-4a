@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Judith Alicia · 4A Rosas Pata</title>
+<style>
+body{font-family:Georgia,serif;background:#efe4d0;margin:0;color:#14202b}
+.box{max-width:520px;margin:8vh auto;background:#fffdf8;border-radius:24px;padding:28px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.12)}
+h1{font-size:28px;margin:12px 0 4px}
+.sub{color:#7a1f32;font-weight:700}
+.avatar{width:88px;height:88px;border-radius:50%;margin:0 auto 10px;background:#7a1f32;color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700}
+a.btn{display:inline-block;margin-top:18px;background:#7a1f32;color:#fff;text-decoration:none;padding:14px 22px;border-radius:14px;font-size:18px}
+</style>
+</head>
+<body>
+<div class="box">
+<div class="avatar">JA</div>
+<div class="sub">4A Rosas Pata · Puno</div>
+<h1>Judith Alicia</h1>
+<p id="titulo">Cargando recurso...</p>
+<p id="tipo"></p>
+<a class="btn" id="ir" href="#">Abrir recurso</a>
+<p style="font-size:14px;color:#666;margin-top:16px">Este QR es el mismo todo el año. Solo cambia el recurso.</p>
+</div>
+<script>
+fetch("destino.json?t="+Date.now()).then(r=>r.json()).then(d=>{
+  document.getElementById("titulo").textContent=d.titulo||"Recurso";
+  document.getElementById("tipo").textContent=(d.tipo||"")+" · "+(d.grado||"");
+  document.getElementById("ir").href=d.url;
+  setTimeout(function(){ location.href=d.url; }, 2500);
+}).catch(function(){
+  document.getElementById("titulo").textContent="Falta destino.json";
+});
+</script>
+</body>
+</html>
