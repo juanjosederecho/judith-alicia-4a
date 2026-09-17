@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · Judith Alicia 4A</title>
+<style>
+body{font-family:Georgia,serif;background:#efe4d0;margin:0;padding:24px;color:#14202b}
+.card{max-width:640px;margin:0 auto;background:#fffdf8;border-radius:20px;padding:24px}
+label{display:block;margin:12px 0 6px;font-weight:700}
+input,select{width:100%;padding:12px;border:2px solid #d7c8ae;border-radius:12px;font-size:17px;box-sizing:border-box}
+button{margin-top:16px;background:#7a1f32;color:#fff;border:0;padding:12px 18px;border-radius:12px;font-size:17px;cursor:pointer}
+.ok{background:#e8f5e9;padding:12px;border-radius:12px;margin-top:12px}
+code{background:#f3ead8;padding:2px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>Cambiar recurso · Judith Alicia</h1>
+<p>El QR de la pared <b>no se reimprime</b>. Solo cambia el destino.</p>
+<label>Título</label>
+<input id="titulo" value="Recurso actual">
+<label>Tipo</label>
+<select id="tipo">
+  <option value="web">Página web</option>
+  <option value="video" selected>Video</option>
+  <option value="pdf">PDF</option>
+  <option value="img">Imagen</option>
+</select>
+<label>Enlace nuevo (https://)</label>
+<input id="url" value="https://www.youtube.com">
+<button onclick="bajar()">Descargar destino.json</button>
+<div class="ok">
+1. Completá el enlace.<br>
+2. Descargá destino.json.<br>
+3. En GitHub: archivo destino.json → lápiz → pegá → Commit.<br>
+4. Esperá 1 minuto. El QR de la pared abre lo nuevo.
+</div>
+<p style="margin-top:14px">Repo: <a href="https://github.com/juanjosederecho/judith-alicia-4a">github.com/juanjosederecho/judith-alicia-4a</a></p>
+</div>
+<script>
+function bajar(){
+  const data = {
+    alumno:"Judith Alicia",
+    grado:"4A Rosas Pata",
+    titulo: document.getElementById("titulo").value,
+    tipo: document.getElementById("tipo").value,
+    url: document.getElementById("url").value.trim()
+  };
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "destino.json";
+  a.click();
+}
+</script>
+</body>
+</html>
