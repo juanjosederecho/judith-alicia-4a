@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Subir recurso · Judith Alicia</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f3ead8;margin:0;padding:20px;color:#1a1a1a}
+.box{max-width:560px;margin:0 auto;background:#fff;border-radius:20px;padding:24px}
+h1{font-size:26px;margin:0 0 8px}
+.paso{background:#fff6e5;border-radius:14px;padding:14px;margin:14px 0}
+button.tipo{margin:6px 6px 0 0;padding:10px 14px;border:2px solid #7a1f32;background:#fff;border-radius:12px;font-size:16px;cursor:pointer}
+button.tipo.on{background:#7a1f32;color:#fff}
+input{width:100%;padding:12px;font-size:16px;border:2px solid #ccc;border-radius:12px;box-sizing:border-box;margin-top:8px}
+.ok{width:100%;margin-top:16px;padding:14px;font-size:18px;border:0;border-radius:12px;background:#7a1f32;color:#fff;cursor:pointer}
+a{color:#7a1f32}
+</style></head>
+<body>
+<div class="box">
+<h1>Judith Alicia · 4A</h1>
+<p>El QR de la pared no se cambia. Acá solo pegás lo que debe abrir.</p>
+
+<div class="paso">
+<b>1. ¿Qué vas a mostrar?</b><br>
+<button class="tipo on" data-t="video">Video</button>
+<button class="tipo" data-t="pdf">PDF</button>
+<button class="tipo" data-t="img">Infografía / foto</button>
+<button class="tipo" data-t="web">Página web</button>
+</div>
+
+<div class="paso">
+<b>2. Poné un título</b>
+<input id="titulo" placeholder="Ej. Juego cooperativo semana 1">
+</div>
+
+<div class="paso">
+<b>3. Pegá el enlace</b>
+<p style="font-size:14px;margin:8px 0">Video: enlace de YouTube.<br>
+PDF o foto: subilo a Google Drive → Compartir → cualquier persona con el enlace → copiá el link.<br>
+Web: copiá la dirección de la página.</p>
+<input id="url" placeholder="https://">
+</div>
+
+<button class="ok" onclick="listo()">Crear archivo para publicar</button>
+<p id="msg" style="margin-top:14px"></p>
+<p style="font-size:14px;color:#555">Después mandame ese archivo o el enlace en el chat y lo dejo activo en el QR.</p>
+</div>
+<script>
+let tipo='video';
+document.querySelectorAll('.tipo').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tipo').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); tipo=b.dataset.t;
+});
+function listo(){
+  const titulo=document.getElementById('titulo').value.trim()||'Recurso';
+  const url=document.getElementById('url').value.trim();
+  if(!url.startsWith('http')){document.getElementById('msg').textContent='Falta un enlace que empiece con https://';return;}
+  const data={alumno:'Judith Alicia',grado:'4A Rosas Pata',titulo,tipo,url};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='destino.json'; a.click();
+  document.getElementById('msg').innerHTML='Archivo descargado. Ahora pegame en el chat el mismo enlace y lo activo en el QR.';
+}
+</script>
+</body></html>
